@@ -1,0 +1,44 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Proctorio Launch API (v2)",
+    "version": "2.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Launch",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": { "name": "Generate candidate (test taker) launch URL", "type": "http" },
+          "http": {
+            "method": "POST",
+            "url": "https://{region}{endpoint}.com/v2/candidate/launch",
+            "body": { "type": "json", "data": "{\"user_id\":\"student-123\",\"launch_url\":\"https://lms.example.edu/exam/42/launch\",\"exam_start\":\"https://lms.example.edu/exam/42/start\",\"exam_take\":\"https://lms.example.edu/exam/42/take\",\"exam_end\":\"https://lms.example.edu/exam/42/end\",\"exam_settings\":{\"record_video\":true,\"verify_id\":\"required\"},\"expire\":18000}" }
+          },
+          "docs": "Returns a signed URL that opens the proctored exam session for the test taker."
+        },
+        {
+          "info": { "name": "Generate reviewer (Review Center) launch URL", "type": "http" },
+          "http": {
+            "method": "POST",
+            "url": "https://{region}{endpoint}.com/v2/reviewer/launch",
+            "body": { "type": "json", "data": "{\"user_id\":\"reviewer-7\",\"launch_url\":\"https://lms.example.edu/exam/42/review\",\"exam_start\":\"https://lms.example.edu/exam/42/start\",\"exam_take\":\"https://lms.example.edu/exam/42/take\",\"exam_end\":\"https://lms.example.edu/exam/42/end\"}" }
+          },
+          "docs": "Returns a signed URL that opens the Review Center for a reviewer."
+        },
+        {
+          "info": { "name": "Generate live-proctoring launch URL", "type": "http" },
+          "http": {
+            "method": "POST",
+            "url": "https://{region}{endpoint}.com/v2/live/launch",
+            "body": { "type": "json", "data": "{\"user_id\":\"proctor-3\",\"launch_url\":\"https://lms.example.edu/exam/42/live\",\"exam_start\":\"https://lms.example.edu/exam/42/start\",\"exam_take\":\"https://lms.example.edu/exam/42/take\",\"exam_end\":\"https://lms.example.edu/exam/42/end\"}" }
+          },
+          "docs": "Returns a signed URL that opens a live/remote-proctor session for real-time monitoring."
+        }
+      ]
+    }
+  ]
+}

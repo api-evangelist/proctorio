@@ -1,0 +1,64 @@
+specification: API Commons Rate Limits
+specificationVersion: '0.1'
+schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/RateLimits
+provider: Proctorio
+providerId: proctorio
+created: '2026-07-05'
+modified: '2026-07-05'
+reconciled: false
+tags:
+- Online Proctoring
+- Exam Integrity
+- Assessment
+- Rate Limiting
+- Quotas
+description: >-
+  Proctorio does not publish numeric rate limits for its v2 integration API or
+  its result webhooks. The launch API is called once per exam session (to mint a
+  signed candidate, reviewer, or live URL) rather than in high-volume automated
+  loops, so effective throughput is governed by exam volume and the terms of the
+  partner/institution agreement rather than by a documented per-minute request
+  cap. Result webhooks are emitted once per submitted attempt (and can be
+  re-emitted from the Review Center). Signed launch URLs carry an expiry
+  (default 18000 seconds in the official client) which bounds how long a minted
+  URL is valid.
+notes: >-
+  No per-account or per-endpoint numeric limit is documented as of the review
+  date. Confirm any throughput or burst expectations with your Proctorio
+  representative when the integration is provisioned.
+sources:
+- https://proctorio.com/about/integration
+- https://github.com/proctorio/API
+responseCodes:
+  throttled: 429
+limits:
+- name: Launch API Requests
+  scope: partner
+  metric: requests
+  limit: not published
+  notes: Called once per exam session; no documented numeric request-rate cap.
+- name: Signed URL Expiry
+  scope: session
+  metric: seconds
+  limit: 18000 (default in official client)
+  notes: The expire field bounds how long a minted launch URL is valid.
+- name: Result Webhook Emission
+  scope: attempt
+  metric: events
+  limit: one per submitted attempt (re-emittable)
+  notes: Proctorio POSTs one result payload per attempt; re-emit from Review Center Export Options.
+- name: Exam Volume
+  scope: contract
+  metric: exams
+  limit: per agreement
+  notes: Overall usage is governed by the institution/partner agreement, not a global API limit.
+policies:
+- name: Signed Request Auth
+  description: All launch requests are HMAC-signed with the Proctorio-provisioned consumer key and secret; unsigned or invalid requests are rejected.
+- name: URL Expiry
+  description: Signed launch URLs expire after the configured window and must be regenerated.
+- name: Backoff Strategy
+  description: Integrating platforms should implement exponential backoff with jitter and honor Retry-After on any 429 responses.
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

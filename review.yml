@@ -1,0 +1,108 @@
+aid: proctorio
+name: Proctorio
+review:
+  question: Does Proctorio expose a documented public WebSocket API?
+  answer: false
+  date: '2026-07-05'
+  reviewer: API Evangelist
+  asyncapiSpecCreated: false
+  asyncapiScopeNote: |
+    No AsyncAPI document was authored. Proctorio's own documented developer
+    surface is request/response HTTP: the v2 integration API mints signed exam
+    launch URLs via three POST endpoints (/v2/candidate/launch,
+    /v2/reviewer/launch, /v2/live/launch), and results are returned as
+    HMAC-signed webhook POSTs (v2/v3 payloads) to the integrating platform's
+    endpoint. Webhooks are server-to-endpoint HTTP, not a persistent WebSocket
+    or SSE stream, so there is no server-push transport on Proctorio's own API
+    to model. The realtime video/audio monitoring in the live-proctoring and
+    browser-extension experiences is internal application transport, not a
+    documented public WebSocket API for integrators.
+findings:
+  summary: |
+    Proctorio does not publish a documented public WebSocket API. Proctorio is
+    a remote proctoring / exam-integrity platform delivered primarily as an
+    LMS-embedded integration over LTI 1.1 and LTI 1.3 (Canvas, Blackboard,
+    Brightspace/D2L, Moodle, ILIAS) plus a browser extension. For assessment
+    platforms that are not LMS-native, Proctorio exposes a partner/integration
+    REST API (v2) that generates signed launch URLs, and delivers exam results
+    via HMAC-signed webhooks (v2 and v3 payloads). Both the launch API and the
+    webhooks are plain HTTPS request/response - there is no documented ws:// or
+    wss:// endpoint for integrators. API access is gated (consumer key, secret,
+    and region endpoint are provisioned by a Proctorio representative), but the
+    endpoint paths, request bodies, and webhook payloads are documented publicly
+    in Proctorio's official Apache-2.0 .NET client at github.com/proctorio/API.
+  accessModel: |
+    Partner/institution-gated but publicly documented. Most institutions never
+    touch the REST API - they integrate Proctorio through LTI 1.1/1.3 in their
+    LMS and the browser extension. The v2 REST launch API + webhooks are used by
+    third-party assessment platforms (e.g. Ans, Cirrus, Questionmark, Top Hat,
+    McGraw Hill Connect, EvaExam, Derivita) and require Proctorio-provisioned
+    credentials and a region-specific endpoint host. The official .NET client
+    (Apache-2.0) and TAO/oat-sa lib-proctorio + GetCertified integration guides
+    document the request shape publicly.
+  ltiIntegration: |
+    Proctorio's primary integration model is LTI. It ships LTI 1.1 and LTI 1.3
+    tools for Canvas, Blackboard, Brightspace (D2L), Moodle, and ILIAS. In that
+    flow the exam is configured inside the LMS, the student launches the exam
+    from the LMS with their existing credentials, and the browser extension +
+    Proctorio backend handle recording, verification, lockdown, and the Review
+    Center. The REST v2 API is the alternative path for non-LMS assessment
+    platforms.
+  transports:
+    - protocol: REST
+      scheme: https
+      baseURL: https://{region}{endpoint}.com
+      documented: true
+      note: v2 launch API - POST /v2/candidate/launch, /v2/reviewer/launch, /v2/live/launch. Base host provisioned per partner.
+    - protocol: Webhook
+      scheme: https
+      documented: true
+      note: HMAC-signed result payloads (v2/v3) POSTed to the integrating platform's endpoint after an attempt is submitted. Re-emittable from Review Center.
+    - protocol: LTI
+      scheme: https
+      documented: true
+      note: LTI 1.1 and 1.3 tools for Canvas, Blackboard, Brightspace, Moodle, ILIAS - the primary integration model.
+    - protocol: WebSocket
+      scheme: wss
+      documented: false
+      note: No public WebSocket endpoint is documented for integrators in Proctorio's API, .NET client, or integration guides as of the review date.
+  endpointsModeled: true
+  endpointsConfirmedRest:
+    - POST https://{region}{endpoint}.com/v2/candidate/launch
+    - POST https://{region}{endpoint}.com/v2/reviewer/launch
+    - POST https://{region}{endpoint}.com/v2/live/launch
+  webhookPayload:
+    version: v2 and v3
+    signing: HMAC signature + nonce + api_key fields on the payload
+    fields:
+      - id
+      - suspicion (overall score)
+      - user_id
+      - attempt_id
+      - submission_data (date, code, message, description)
+      - flags (unfocus, clipboard, browser_resize, multiple_faces, leaving_exam_area, speaking, ai, printing, screenshot, hardware_change, external_action, webcam_obscured, mobile_phone, ...)
+sources:
+  - url: https://proctorio.com/about/integration
+    type: Documentation
+    note: Integration overview - LTI for LMS, developer APIs for third-party assessment platforms; supported LMS and assessment partners.
+  - url: https://github.com/proctorio/API
+    type: SourceCode
+    note: Official Apache-2.0 .NET client. Documents v2 launch endpoints, launch/exam-settings request fields, and v2/v3 webhook payloads. HMAC api_key auth.
+  - url: https://changes.proctorio.com/
+    type: Changelog
+    note: Notes v2 API integrations, webhook re-emit from Review Center, custom extension allowlist for v2, roster pings for API integrations.
+  - url: https://wiki.youtestme.com/youtestme/helpPages/en/integrations.html
+    type: Documentation
+    note: Third-party integration guide - API endpoint URL, consumer key, secret key, exam settings; HMAC-SHA1 signing.
+  - url: https://packagist.org/packages/oat-sa/lib-proctorio
+    type: SourceCode
+    note: TAO/oat-sa PHP library - LAUNCH_URL, USER_ID, EXAM_TAKE/EXAM_END, EXAM_SETTINGS; OAuth key+secret signing; returns test-taker and reviewer URLs.
+actions:
+  asyncapiPath: null
+  apisYmlUpdated: true
+  reason: |
+    No WebSocket protocol surface exists for integrators. Proctorio's own
+    documented API is request/response REST (the v2 launch API) plus HTTP
+    webhooks for results, alongside an LTI 1.1/1.3 LMS integration model. No
+    AsyncAPI document was created because there is no server-push transport on
+    Proctorio's own public API to model.

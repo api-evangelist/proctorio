@@ -1,0 +1,85 @@
+specification: FinOps Framework
+specificationVersion: '1.0'
+schema: https://www.finops.org/framework/
+provider: Proctorio
+providerId: proctorio
+created: '2026-07-05'
+modified: '2026-07-05'
+reconciled: false
+tags:
+- Online Proctoring
+- Exam Integrity
+- Assessment
+- EdTech
+- FinOps
+- Cost Management
+- FOCUS
+description: >-
+  FinOps view of Proctorio spend. Proctorio is not billed as a metered API;
+  cost is driven by proctored exam attempts under an institution or partner
+  agreement, invoiced to the institution or paid directly by students. The v2
+  integration API and result webhooks are included with the agreement rather
+  than priced as a separate API line item, so there is no per-call API cost to
+  allocate - the meaningful cost unit is the proctored exam attempt (and, in
+  student-pay arrangements, the cost shifts entirely to the student).
+notes: >-
+  Per-attempt rates are negotiated and not officially published; verify with
+  Proctorio. Cost allocation is naturally per course / exam / term because that
+  is how exam attempts are counted.
+sources:
+- https://proctorio.com/
+- https://proctorio.com/about/integration
+- https://www.eandi.org/contracts/proctorio/
+- https://focus.finops.org/focus-specification/v1-3/
+alignedWith:
+  framework: FinOps Foundation Framework
+  frameworkUrl: https://www.finops.org/framework/
+  dataSpec: FOCUS
+  dataSpecVersion: '1.3'
+  dataSpecUrl: https://focus.finops.org/focus-specification/v1-3/
+publisherName: Proctorio
+serviceCategory: Education and Assessment
+billingModel:
+  pricingCategory: Usage-Based
+  billingFrequency: Monthly
+  billingCurrency: USD
+  chargeCategories:
+  - Usage
+  - Purchase
+focusColumns:
+  ServiceName: Proctorio
+  ServiceCategory: Education and Assessment
+  ProviderName: Proctorio
+  PublisherName: Proctorio
+  InvoiceIssuerName: Proctorio
+  BillingCurrency: USD
+  ChargeCategory: Usage
+  PricingCategory: Usage-Based
+meters:
+- name: proctored_exam_attempts
+  description: Number of proctored exam attempts launched; the primary billing unit.
+  unit: exams
+  aggregation: sum
+  dimensions:
+  - institution
+  - course
+  - term
+- name: student_paid_exams
+  description: Exams paid directly by students via credit card (institution incurs no cost).
+  unit: exams
+  aggregation: sum
+  dimensions:
+  - student
+  - term
+principles:
+- name: Visibility
+  description: Track proctored exam attempts per course, term, and department; distinguish institution-invoiced from student-paid attempts.
+- name: Allocation
+  description: Map exam attempts to courses/departments so proctoring cost lands on the owning program.
+- name: Optimization
+  description: Reserve proctoring for high-stakes exams, use lighter exam-settings profiles where full recording is not required, and consider student-pay to shift cost off the institution.
+- name: Accountability
+  description: Assign an owner per program; review attempt volume against the contracted rate and budget each term.
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

@@ -1,0 +1,113 @@
+specification: API Commons Plans
+specificationVersion: '0.1'
+schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/Plans
+provider: Proctorio
+providerId: proctorio
+created: '2026-07-05'
+modified: '2026-07-05'
+reconciled: false
+tags:
+- Online Proctoring
+- Exam Integrity
+- Assessment
+- EdTech
+- Plans
+description: >-
+  Proctorio does not publish a public self-serve price list or a metered API
+  price. Pricing is quoted per institution or per partner through Proctorio
+  sales and is consumption-based on proctored exams. Publicly reported figures
+  vary by contract and year - examples seen in third-party sources include
+  roughly $5 per test, a per-student bundle around $60, per-student-per-exam
+  fees in the high single digits, and flat per-student term fees - but none of
+  these are official published rates. Billing is either invoiced to the
+  institution or paid directly by the student with a credit card (student-pay,
+  which costs the institution nothing). API/integration access (the v2 launch
+  API and webhooks) is included with a Proctorio agreement rather than sold as a
+  separate API plan; credentials and the endpoint host are provisioned by a
+  Proctorio representative.
+notes: >-
+  All dollar figures below are illustrative third-party reports, not official
+  Proctorio rates. Contact Proctorio for a current quote. There is no documented
+  API-usage meter or per-call fee - Proctorio meters on proctored exam
+  attempts, not API requests.
+sources:
+- https://proctorio.com/
+- https://proctorio.com/about/integration
+- https://www.eandi.org/contracts/proctorio/
+- https://www.capterra.com/p/230043/Proctorio/
+plans:
+- id: proctorio-institution
+  name: Institution (Invoiced)
+  type: enterprise
+  description: >-
+    Institution-wide agreement billed to the school/organization on a
+    consumption basis (proctored exam attempts). Includes LTI 1.1 / 1.3
+    integration for the LMS, the Review Center, exam settings, and - where
+    needed - the v2 integration API and result webhooks. Volume and features
+    are negotiated.
+  entries:
+  - label: Proctored Exam Attempt
+    name: exam_attempt
+    type: usage
+    metric: exams
+    limit: -1
+    timeFrame: year
+    geo: global
+    unit: 1
+    price: quoted per contract (reported examples ~$5/test to ~$17.50/student/term)
+    userMultiplied: true
+  elements:
+  - name: LTI 1.1 and 1.3 Integration
+  - name: Review Center
+  - name: Automated Recording and Flagging
+  - name: v2 Integration API and Webhooks
+  - name: Support and Onboarding
+- id: proctorio-student-pay
+  name: Student-Pay
+  type: paid
+  description: >-
+    Students pay per exam directly with a credit card at launch, so the
+    institution incurs no direct Proctorio cost. Per-exam / bundle price is set
+    in the agreement.
+  entries:
+  - label: Per-Exam (Student Paid)
+    name: student_exam
+    type: usage
+    metric: exams
+    limit: -1
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: reported examples ~$5/test or ~$60/student bundle
+    userMultiplied: true
+  elements:
+  - name: Direct Credit-Card Payment
+  - name: No Institutional Invoice
+  - name: Same Proctoring Feature Set
+- id: proctorio-partner
+  name: Assessment Platform Partner
+  type: enterprise
+  description: >-
+    Integration agreement for assessment platforms (e.g. Ans, Cirrus, Questionmark,
+    Top Hat, McGraw Hill Connect) that embed Proctorio via the v2 launch API and
+    result webhooks rather than through an LMS/LTI flow. Consumer key, secret, and
+    region endpoint are provisioned by Proctorio.
+  entries:
+  - label: Partner Integration Agreement
+    name: partner
+    type: flat
+    metric: contract
+    limit: -1
+    timeFrame: year
+    geo: global
+    unit: 1
+    price: contact sales
+    userMultiplied: false
+  elements:
+  - name: v2 Launch API (candidate / reviewer / live)
+  - name: HMAC-Signed Result Webhooks (v2 / v3)
+  - name: Custom Extension Allowlist (v2)
+  - name: Region-Specific API Endpoint
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

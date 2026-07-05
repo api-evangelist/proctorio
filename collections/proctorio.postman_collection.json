@@ -1,0 +1,69 @@
+{
+  "info": {
+    "name": "Proctorio Launch API (v2)",
+    "description": "Signed exam launch URL generation for the Proctorio v2 integration API, used by assessment platforms that embed Proctorio outside of an LMS/LTI flow. Each call returns a signed URL that opens a proctored session for a candidate, a reviewer, or a live proctor. Requests are HMAC-signed with a Proctorio-provisioned consumer key and secret. The base host (region + endpoint) is provisioned per partner. Endpoint paths and request fields are transcribed from Proctorio's official Apache-2.0 .NET client (github.com/proctorio/API).",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "https://{{region}}{{endpoint}}.com", "type": "string" },
+    { "key": "region", "value": "", "type": "string" },
+    { "key": "endpoint", "value": "", "type": "string" },
+    { "key": "consumerKey", "value": "", "type": "string" },
+    { "key": "consumerSecret", "value": "", "type": "string" }
+  ],
+  "item": [
+    {
+      "name": "Launch",
+      "item": [
+        {
+          "name": "Generate candidate (test taker) launch URL",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "{{proctorioHmacSignature}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"user_id\": \"student-123\",\n  \"launch_url\": \"https://lms.example.edu/exam/42/launch\",\n  \"exam_start\": \"https://lms.example.edu/exam/42/start\",\n  \"exam_take\": \"https://lms.example.edu/exam/42/take\",\n  \"exam_end\": \"https://lms.example.edu/exam/42/end\",\n  \"exam_settings\": {\n    \"record_video\": true,\n    \"record_audio\": true,\n    \"record_screen\": true,\n    \"verify_id\": \"required\",\n    \"full_screen\": \"on\",\n    \"disable_clipboard\": true\n  },\n  \"expire\": 18000\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/v2/candidate/launch", "host": ["{{baseUrl}}"], "path": ["v2", "candidate", "launch"] },
+            "description": "Returns a signed URL that opens the proctored exam session for the test taker."
+          }
+        },
+        {
+          "name": "Generate reviewer (Review Center) launch URL",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "{{proctorioHmacSignature}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"user_id\": \"reviewer-7\",\n  \"launch_url\": \"https://lms.example.edu/exam/42/review\",\n  \"exam_start\": \"https://lms.example.edu/exam/42/start\",\n  \"exam_take\": \"https://lms.example.edu/exam/42/take\",\n  \"exam_end\": \"https://lms.example.edu/exam/42/end\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/v2/reviewer/launch", "host": ["{{baseUrl}}"], "path": ["v2", "reviewer", "launch"] },
+            "description": "Returns a signed URL that opens the Review Center for a reviewer to inspect recordings, suspicion scores, and flags."
+          }
+        },
+        {
+          "name": "Generate live-proctoring launch URL",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "{{proctorioHmacSignature}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"user_id\": \"proctor-3\",\n  \"launch_url\": \"https://lms.example.edu/exam/42/live\",\n  \"exam_start\": \"https://lms.example.edu/exam/42/start\",\n  \"exam_take\": \"https://lms.example.edu/exam/42/take\",\n  \"exam_end\": \"https://lms.example.edu/exam/42/end\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/v2/live/launch", "host": ["{{baseUrl}}"], "path": ["v2", "live", "launch"] },
+            "description": "Returns a signed URL that opens a live/remote-proctor session for real-time monitoring."
+          }
+        }
+      ]
+    }
+  ]
+}
