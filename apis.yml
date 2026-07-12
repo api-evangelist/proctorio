@@ -87,6 +87,14 @@ apis:
     Options tab when behavior settings change. Payload shape is taken from Proctorio's
     official .NET client (Webhooks/Requests/V2 and V3).
 common:
+- type: TrustCenter
+  url: security/proctorio-trust-center.yml
+- type: VulnerabilityDisclosure
+  url: security/proctorio-vulnerability-disclosure.yml
+- type: DomainSecurity
+  url: security/proctorio-domain-security.yml
+- type: Authentication
+  url: authentication/proctorio-authentication.yml
 - type: GitHubOrganization
   url: https://github.com/proctorio
 - type: LinkedIn

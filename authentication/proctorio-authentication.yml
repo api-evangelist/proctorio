@@ -1,0 +1,19 @@
+generated: '2026-07-11'
+method: derived
+source: openapi/proctorio-openapi.yml
+summary:
+  types:
+  - apiKey
+  api_key_in:
+  - header
+schemes:
+- name: proctorioHmac
+  type: apiKey
+  in: header
+  parameter: Authorization
+  description: OAuth-style HMAC signature computed from the Proctorio-provisioned consumer key
+    and secret. In the official .NET client this is produced by Helpers.GetApiKey(consumerKey,
+    consumerSecret) and attached to the request; the GetCertified/TAO integrations describe
+    HMAC-SHA1 signing.
+  sources:
+  - openapi/proctorio-openapi.yml
