@@ -16,7 +16,20 @@ description: Proctorio is a remote proctoring and learning-integrity platform th
   provisioned by a Proctorio representative per institution or partner - but the
   endpoint paths, request bodies, and webhook payloads are documented publicly in
   Proctorio's official Apache-2.0 .NET client (github.com/proctorio/API).
-image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+accessModel:
+  pricing: paid
+  onboarding: self-serve
+  trial: false
+  try_now: false
+  public: false
+  label: Paid · Self-serve signup
+  confidence: high
+  source:
+  - plans
+  - authentication
+  generated: '2026-07-22'
+  method: derived
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/proctorio.png
 tags:
 - Online Proctoring
 - Remote Proctoring
@@ -30,37 +43,6 @@ created: '2026-07-05'
 modified: '2026-07-05'
 specificationVersion: '0.19'
 apis:
-- aid: proctorio:proctorio-launch-api
-  name: Proctorio Launch API (v2)
-  tags:
-  - Exams
-  - Sessions
-  - Launch
-  - Proctoring
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-  humanURL: https://proctorio.com/about/integration
-  baseURL: https://{region}{endpoint}.com
-  properties:
-  - url: https://proctorio.com/about/integration
-    type: Documentation
-  - url: https://github.com/proctorio/API
-    type: SourceCode
-  - url: openapi/proctorio-openapi.yml
-    type: OpenAPI
-  - url: collections/proctorio.postman_collection.json
-    type: PostmanCollection
-  - url: collections/proctorio.opencollection.json
-    type: OpenCollection
-  description: The Proctorio v2 integration API used by assessment platforms that
-    embed Proctorio outside of a native LMS/LTI flow. Each call takes the exam's
-    launch/start/take/end URLs plus an exam-settings object (which recording,
-    verification, and lockdown behaviors to enforce) and returns a single signed URL
-    that drops the user into the proctored session. Three launch endpoints exist -
-    candidate (test taker), reviewer (Review Center access), and live (live/remote
-    proctor). Requests are authenticated with a Proctorio-provisioned consumer key
-    and secret via OAuth-style HMAC signing. The base host (region + endpoint) is
-    provisioned per partner. Endpoint paths and request fields are taken from
-    Proctorio's official .NET client and are not modeled.
 - aid: proctorio:proctorio-webhooks
   name: Proctorio Result Webhooks (v2/v3)
   tags:
@@ -76,16 +58,33 @@ apis:
     type: SourceCode
   - url: https://proctorio.com/about/integration
     type: Documentation
-  description: After an exam attempt is submitted, Proctorio POSTs an HMAC-signed JSON
-    webhook to the integrating platform's endpoint carrying the attempt id, user id,
-    an overall suspicion score, submission metadata, and a set of behavioral flags
-    (unfocus, clipboard, browser resize, multiple faces, leaving the exam area,
-    speaking, AI-assistance, printing, screenshot, hardware change, external action,
-    webcam obscured, mobile phone, and more, each weighted 0-1). Two payload versions
-    are documented (v2 and v3). This is server-to-endpoint HTTP delivery over HTTPS,
-    not a WebSocket; the payload can be re-emitted from the Review Center Export
-    Options tab when behavior settings change. Payload shape is taken from Proctorio's
+  description: >-
+    After an exam attempt is submitted, Proctorio POSTs an HMAC-signed JSON webhook to the integrating
+    platform's endpoint carrying the attempt id, user id, an overall suspicion score, submission metadata,
+    and a set of behavioral flags (unfocus, clipboard, browser resize, multiple faces, leaving the exam
+    area, speaking, AI-assistance, printing, screenshot, hardware change, external action, webcam obscured,
+    mobile phone, and more, each weighted 0-1). Two payload versions are documented (v2 and v3). This
+    is server-to-endpoint HTTP delivery over HTTPS, not a WebSocket; the payload can be re-emitted from
+    the Review Center Export Options tab when behavior settings change. Payload shape is taken from Proctorio's
     official .NET client (Webhooks/Requests/V2 and V3).
+- aid: proctorio:proctorio-launch-api
+  name: Proctorio Launch API
+  description: Generate signed launch URLs for proctored exam sessions.
+  humanURL: https://proctorio.com/about/integration
+  baseURL: https://{region}{endpoint}.com
+  tags:
+  - Launch
+  properties:
+  - type: OpenAPI
+    url: openapi/proctorio-launch-api-openapi.yml
+  - type: Documentation
+    url: https://proctorio.com/about/integration
+  - type: SourceCode
+    url: https://github.com/proctorio/API
+  - type: PostmanCollection
+    url: collections/proctorio.postman_collection.json
+  - type: OpenCollection
+    url: collections/proctorio.opencollection.json
 common:
 - type: AgenticAccess
   url: agentic-access/proctorio-agentic-access.yml
