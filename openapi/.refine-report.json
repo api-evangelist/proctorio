@@ -1,0 +1,14 @@
+{
+  "provider": "proctorio",
+  "sources": [
+    "proctorio-launch-api-openapi.yml"
+  ],
+  "outputs": [
+    "proctorio-launch-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}
