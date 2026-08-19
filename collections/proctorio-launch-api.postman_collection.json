@@ -1,0 +1,652 @@
+{
+  "item": [
+    {
+      "id": "c9402cf5-c033-4320-ad64-0b9cecebef54",
+      "name": "Launch",
+      "description": {
+        "content": "Generate signed launch URLs for proctored exam sessions.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "688059e6-ad73-493f-b906-bfb7b14eeb69",
+          "name": "Generate a candidate (test taker) launch URL",
+          "request": {
+            "name": "Generate a candidate (test taker) launch URL",
+            "description": {
+              "content": "Returns a signed URL that opens the proctored exam session for the test taker, applying the supplied exam settings (recording, verification, and lockdown behaviors).",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "candidate",
+                "launch"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": "Region segment provisioned by Proctorio.",
+                  "type": "any",
+                  "value": "{{region}}",
+                  "key": "region"
+                },
+                {
+                  "description": "Endpoint segment provisioned by Proctorio.",
+                  "type": "any",
+                  "value": "{{endpoint}}",
+                  "key": "endpoint"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"user_id\": \"<string>\",\n  \"launch_url\": \"<string>\",\n  \"exam_start\": \"<string>\",\n  \"exam_take\": \"<string>\",\n  \"exam_end\": \"<string>\",\n  \"exam_settings\": {\n    \"record_video\": \"<boolean>\",\n    \"record_audio\": \"<boolean>\",\n    \"record_screen\": \"<boolean>\",\n    \"record_web_traffic\": \"<boolean>\",\n    \"record_desk\": false,\n    \"verify_video\": \"<boolean>\",\n    \"verify_audio\": \"<boolean>\",\n    \"verify_desktop\": \"<boolean>\",\n    \"verify_id\": \"not_required\",\n    \"verify_signature\": \"<boolean>\",\n    \"full_screen\": false,\n    \"disable_clipboard\": \"<boolean>\",\n    \"tabs\": \"allowed\",\n    \"close_tabs\": \"<boolean>\",\n    \"one_screen\": \"<boolean>\",\n    \"disable_printing\": \"<boolean>\",\n    \"block_downloads\": \"<boolean>\",\n    \"clear_cache\": \"<boolean>\",\n    \"disable_right_click\": \"<boolean>\",\n    \"calculator\": false,\n    \"whiteboard\": \"<boolean>\"\n  },\n  \"expire\": 18000,\n  \"redirect_url\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "e295af7b-a654-4714-bd67-a19f6aca6526",
+              "name": "A signed candidate launch URL.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "candidate",
+                    "launch"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Region segment provisioned by Proctorio.",
+                      "type": "any",
+                      "value": "{{region}}",
+                      "key": "region"
+                    },
+                    {
+                      "description": "Endpoint segment provisioned by Proctorio.",
+                      "type": "any",
+                      "value": "{{endpoint}}",
+                      "key": "endpoint"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"user_id\": \"<string>\",\n  \"launch_url\": \"<string>\",\n  \"exam_start\": \"<string>\",\n  \"exam_take\": \"<string>\",\n  \"exam_end\": \"<string>\",\n  \"exam_settings\": {\n    \"record_video\": \"<boolean>\",\n    \"record_audio\": \"<boolean>\",\n    \"record_screen\": \"<boolean>\",\n    \"record_web_traffic\": \"<boolean>\",\n    \"record_desk\": false,\n    \"verify_video\": \"<boolean>\",\n    \"verify_audio\": \"<boolean>\",\n    \"verify_desktop\": \"<boolean>\",\n    \"verify_id\": \"not_required\",\n    \"verify_signature\": \"<boolean>\",\n    \"full_screen\": false,\n    \"disable_clipboard\": \"<boolean>\",\n    \"tabs\": \"allowed\",\n    \"close_tabs\": \"<boolean>\",\n    \"one_screen\": \"<boolean>\",\n    \"disable_printing\": \"<boolean>\",\n    \"block_downloads\": \"<boolean>\",\n    \"clear_cache\": \"<boolean>\",\n    \"disable_right_click\": \"<boolean>\",\n    \"calculator\": false,\n    \"whiteboard\": \"<boolean>\"\n  },\n  \"expire\": 18000,\n  \"redirect_url\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"launch_url\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d3be99e4-f006-47f8-b441-9e7c6e05068f",
+              "name": "Missing or invalid HMAC signature / credentials.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "candidate",
+                    "launch"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Region segment provisioned by Proctorio.",
+                      "type": "any",
+                      "value": "{{region}}",
+                      "key": "region"
+                    },
+                    {
+                      "description": "Endpoint segment provisioned by Proctorio.",
+                      "type": "any",
+                      "value": "{{endpoint}}",
+                      "key": "endpoint"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"user_id\": \"<string>\",\n  \"launch_url\": \"<string>\",\n  \"exam_start\": \"<string>\",\n  \"exam_take\": \"<string>\",\n  \"exam_end\": \"<string>\",\n  \"exam_settings\": {\n    \"record_video\": \"<boolean>\",\n    \"record_audio\": \"<boolean>\",\n    \"record_screen\": \"<boolean>\",\n    \"record_web_traffic\": \"<boolean>\",\n    \"record_desk\": false,\n    \"verify_video\": \"<boolean>\",\n    \"verify_audio\": \"<boolean>\",\n    \"verify_desktop\": \"<boolean>\",\n    \"verify_id\": \"not_required\",\n    \"verify_signature\": \"<boolean>\",\n    \"full_screen\": false,\n    \"disable_clipboard\": \"<boolean>\",\n    \"tabs\": \"allowed\",\n    \"close_tabs\": \"<boolean>\",\n    \"one_screen\": \"<boolean>\",\n    \"disable_printing\": \"<boolean>\",\n    \"block_downloads\": \"<boolean>\",\n    \"clear_cache\": \"<boolean>\",\n    \"disable_right_click\": \"<boolean>\",\n    \"calculator\": false,\n    \"whiteboard\": \"<boolean>\"\n  },\n  \"expire\": 18000,\n  \"redirect_url\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "1951a795-9ee0-49c9-880d-fc2b972b4de2",
+          "name": "Generate a reviewer (Review Center) launch URL",
+          "request": {
+            "name": "Generate a reviewer (Review Center) launch URL",
+            "description": {
+              "content": "Returns a signed URL that opens the Review Center for a reviewer to inspect recordings, suspicion scores, and behavioral flags for an exam or attempt.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "reviewer",
+                "launch"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": "Region segment provisioned by Proctorio.",
+                  "type": "any",
+                  "value": "{{region}}",
+                  "key": "region"
+                },
+                {
+                  "description": "Endpoint segment provisioned by Proctorio.",
+                  "type": "any",
+                  "value": "{{endpoint}}",
+                  "key": "endpoint"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"user_id\": \"<string>\",\n  \"launch_url\": \"<string>\",\n  \"exam_start\": \"<string>\",\n  \"exam_take\": \"<string>\",\n  \"exam_end\": \"<string>\",\n  \"exam_settings\": {\n    \"record_video\": \"<boolean>\",\n    \"record_audio\": \"<boolean>\",\n    \"record_screen\": \"<boolean>\",\n    \"record_web_traffic\": \"<boolean>\",\n    \"record_desk\": false,\n    \"verify_video\": \"<boolean>\",\n    \"verify_audio\": \"<boolean>\",\n    \"verify_desktop\": \"<boolean>\",\n    \"verify_id\": \"not_required\",\n    \"verify_signature\": \"<boolean>\",\n    \"full_screen\": false,\n    \"disable_clipboard\": \"<boolean>\",\n    \"tabs\": \"allowed\",\n    \"close_tabs\": \"<boolean>\",\n    \"one_screen\": \"<boolean>\",\n    \"disable_printing\": \"<boolean>\",\n    \"block_downloads\": \"<boolean>\",\n    \"clear_cache\": \"<boolean>\",\n    \"disable_right_click\": \"<boolean>\",\n    \"calculator\": false,\n    \"whiteboard\": \"<boolean>\"\n  },\n  \"expire\": 18000,\n  \"redirect_url\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "337cbb0b-5750-4a77-bd36-382b9321207f",
+              "name": "A signed reviewer launch URL.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "reviewer",
+                    "launch"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Region segment provisioned by Proctorio.",
+                      "type": "any",
+                      "value": "{{region}}",
+                      "key": "region"
+                    },
+                    {
+                      "description": "Endpoint segment provisioned by Proctorio.",
+                      "type": "any",
+                      "value": "{{endpoint}}",
+                      "key": "endpoint"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"user_id\": \"<string>\",\n  \"launch_url\": \"<string>\",\n  \"exam_start\": \"<string>\",\n  \"exam_take\": \"<string>\",\n  \"exam_end\": \"<string>\",\n  \"exam_settings\": {\n    \"record_video\": \"<boolean>\",\n    \"record_audio\": \"<boolean>\",\n    \"record_screen\": \"<boolean>\",\n    \"record_web_traffic\": \"<boolean>\",\n    \"record_desk\": false,\n    \"verify_video\": \"<boolean>\",\n    \"verify_audio\": \"<boolean>\",\n    \"verify_desktop\": \"<boolean>\",\n    \"verify_id\": \"not_required\",\n    \"verify_signature\": \"<boolean>\",\n    \"full_screen\": false,\n    \"disable_clipboard\": \"<boolean>\",\n    \"tabs\": \"allowed\",\n    \"close_tabs\": \"<boolean>\",\n    \"one_screen\": \"<boolean>\",\n    \"disable_printing\": \"<boolean>\",\n    \"block_downloads\": \"<boolean>\",\n    \"clear_cache\": \"<boolean>\",\n    \"disable_right_click\": \"<boolean>\",\n    \"calculator\": false,\n    \"whiteboard\": \"<boolean>\"\n  },\n  \"expire\": 18000,\n  \"redirect_url\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"launch_url\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8a94c741-a1fc-4672-a73f-15cbea938ae3",
+              "name": "Missing or invalid HMAC signature / credentials.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "reviewer",
+                    "launch"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Region segment provisioned by Proctorio.",
+                      "type": "any",
+                      "value": "{{region}}",
+                      "key": "region"
+                    },
+                    {
+                      "description": "Endpoint segment provisioned by Proctorio.",
+                      "type": "any",
+                      "value": "{{endpoint}}",
+                      "key": "endpoint"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"user_id\": \"<string>\",\n  \"launch_url\": \"<string>\",\n  \"exam_start\": \"<string>\",\n  \"exam_take\": \"<string>\",\n  \"exam_end\": \"<string>\",\n  \"exam_settings\": {\n    \"record_video\": \"<boolean>\",\n    \"record_audio\": \"<boolean>\",\n    \"record_screen\": \"<boolean>\",\n    \"record_web_traffic\": \"<boolean>\",\n    \"record_desk\": false,\n    \"verify_video\": \"<boolean>\",\n    \"verify_audio\": \"<boolean>\",\n    \"verify_desktop\": \"<boolean>\",\n    \"verify_id\": \"not_required\",\n    \"verify_signature\": \"<boolean>\",\n    \"full_screen\": false,\n    \"disable_clipboard\": \"<boolean>\",\n    \"tabs\": \"allowed\",\n    \"close_tabs\": \"<boolean>\",\n    \"one_screen\": \"<boolean>\",\n    \"disable_printing\": \"<boolean>\",\n    \"block_downloads\": \"<boolean>\",\n    \"clear_cache\": \"<boolean>\",\n    \"disable_right_click\": \"<boolean>\",\n    \"calculator\": false,\n    \"whiteboard\": \"<boolean>\"\n  },\n  \"expire\": 18000,\n  \"redirect_url\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "3bffaa3c-c311-4b2e-bc64-8c709016ab24",
+          "name": "Generate a live-proctoring launch URL",
+          "request": {
+            "name": "Generate a live-proctoring launch URL",
+            "description": {
+              "content": "Returns a signed URL that opens a live/remote-proctor session, letting a human proctor monitor the candidate in real time.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "live",
+                "launch"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": "Region segment provisioned by Proctorio.",
+                  "type": "any",
+                  "value": "{{region}}",
+                  "key": "region"
+                },
+                {
+                  "description": "Endpoint segment provisioned by Proctorio.",
+                  "type": "any",
+                  "value": "{{endpoint}}",
+                  "key": "endpoint"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"user_id\": \"<string>\",\n  \"launch_url\": \"<string>\",\n  \"exam_start\": \"<string>\",\n  \"exam_take\": \"<string>\",\n  \"exam_end\": \"<string>\",\n  \"exam_settings\": {\n    \"record_video\": \"<boolean>\",\n    \"record_audio\": \"<boolean>\",\n    \"record_screen\": \"<boolean>\",\n    \"record_web_traffic\": \"<boolean>\",\n    \"record_desk\": false,\n    \"verify_video\": \"<boolean>\",\n    \"verify_audio\": \"<boolean>\",\n    \"verify_desktop\": \"<boolean>\",\n    \"verify_id\": \"not_required\",\n    \"verify_signature\": \"<boolean>\",\n    \"full_screen\": false,\n    \"disable_clipboard\": \"<boolean>\",\n    \"tabs\": \"allowed\",\n    \"close_tabs\": \"<boolean>\",\n    \"one_screen\": \"<boolean>\",\n    \"disable_printing\": \"<boolean>\",\n    \"block_downloads\": \"<boolean>\",\n    \"clear_cache\": \"<boolean>\",\n    \"disable_right_click\": \"<boolean>\",\n    \"calculator\": false,\n    \"whiteboard\": \"<boolean>\"\n  },\n  \"expire\": 18000,\n  \"redirect_url\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "a59cc48e-7812-42e2-9e04-e03cc49eb92b",
+              "name": "A signed live-proctoring launch URL.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "live",
+                    "launch"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Region segment provisioned by Proctorio.",
+                      "type": "any",
+                      "value": "{{region}}",
+                      "key": "region"
+                    },
+                    {
+                      "description": "Endpoint segment provisioned by Proctorio.",
+                      "type": "any",
+                      "value": "{{endpoint}}",
+                      "key": "endpoint"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"user_id\": \"<string>\",\n  \"launch_url\": \"<string>\",\n  \"exam_start\": \"<string>\",\n  \"exam_take\": \"<string>\",\n  \"exam_end\": \"<string>\",\n  \"exam_settings\": {\n    \"record_video\": \"<boolean>\",\n    \"record_audio\": \"<boolean>\",\n    \"record_screen\": \"<boolean>\",\n    \"record_web_traffic\": \"<boolean>\",\n    \"record_desk\": false,\n    \"verify_video\": \"<boolean>\",\n    \"verify_audio\": \"<boolean>\",\n    \"verify_desktop\": \"<boolean>\",\n    \"verify_id\": \"not_required\",\n    \"verify_signature\": \"<boolean>\",\n    \"full_screen\": false,\n    \"disable_clipboard\": \"<boolean>\",\n    \"tabs\": \"allowed\",\n    \"close_tabs\": \"<boolean>\",\n    \"one_screen\": \"<boolean>\",\n    \"disable_printing\": \"<boolean>\",\n    \"block_downloads\": \"<boolean>\",\n    \"clear_cache\": \"<boolean>\",\n    \"disable_right_click\": \"<boolean>\",\n    \"calculator\": false,\n    \"whiteboard\": \"<boolean>\"\n  },\n  \"expire\": 18000,\n  \"redirect_url\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"launch_url\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d2ab6b4f-dd5d-46a5-8e34-15bbbd8ea5e4",
+              "name": "Missing or invalid HMAC signature / credentials.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "live",
+                    "launch"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Region segment provisioned by Proctorio.",
+                      "type": "any",
+                      "value": "{{region}}",
+                      "key": "region"
+                    },
+                    {
+                      "description": "Endpoint segment provisioned by Proctorio.",
+                      "type": "any",
+                      "value": "{{endpoint}}",
+                      "key": "endpoint"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"user_id\": \"<string>\",\n  \"launch_url\": \"<string>\",\n  \"exam_start\": \"<string>\",\n  \"exam_take\": \"<string>\",\n  \"exam_end\": \"<string>\",\n  \"exam_settings\": {\n    \"record_video\": \"<boolean>\",\n    \"record_audio\": \"<boolean>\",\n    \"record_screen\": \"<boolean>\",\n    \"record_web_traffic\": \"<boolean>\",\n    \"record_desk\": false,\n    \"verify_video\": \"<boolean>\",\n    \"verify_audio\": \"<boolean>\",\n    \"verify_desktop\": \"<boolean>\",\n    \"verify_id\": \"not_required\",\n    \"verify_signature\": \"<boolean>\",\n    \"full_screen\": false,\n    \"disable_clipboard\": \"<boolean>\",\n    \"tabs\": \"allowed\",\n    \"close_tabs\": \"<boolean>\",\n    \"one_screen\": \"<boolean>\",\n    \"disable_printing\": \"<boolean>\",\n    \"block_downloads\": \"<boolean>\",\n    \"clear_cache\": \"<boolean>\",\n    \"disable_right_click\": \"<boolean>\",\n    \"calculator\": false,\n    \"whiteboard\": \"<boolean>\"\n  },\n  \"expire\": 18000,\n  \"redirect_url\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "description": {
+        "content": "Region segment provisioned by Proctorio.",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "ondemand",
+      "key": "region"
+    },
+    {
+      "description": {
+        "content": "Endpoint segment provisioned by Proctorio.",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": ".proctorio",
+      "key": "endpoint"
+    },
+    {
+      "type": "string",
+      "value": "https://{{region}}{{endpoint}}.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "Authorization"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "46e4c060-e131-4cee-9c37-3be37281051a",
+    "name": "Proctorio API (v2) Launch API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Proctorio v2 integration API generates signed exam launch URLs for third-party assessment platforms that embed Proctorio outside of a native LMS/LTI flow. Given the exam's launch, start, take, and end URLs plus an exam-settings object describing which recording, verification, and lockdown behaviors to enforce, each endpoint returns a single signed URL that opens the proctored session for a candidate (test taker), a reviewer (Review Center), or a live proctor. Requests are authenticated with a Proctorio-provisioned consumer key and secret using OAuth-style HMAC signing; the region-specific base host is also provisioned per partner or institution. Access is gated - credentials and the endpoint host are issued by a Proctorio representative - but the endpoint paths, request bodies, and webhook payloads are documented publicly in Proctorio's official Apache-2.0 .NET client (github.com/proctorio/API). Endpoints and fields in this document are transcribed from that client and reference documentation; they are not fabricated, but the base host is a placeholder and response schemas are modeled from the documented behavior (each endpoint returns a signed launch URL string).\n\nContact Support:\n Name: Proctorio",
+      "type": "text/plain"
+    }
+  }
+}

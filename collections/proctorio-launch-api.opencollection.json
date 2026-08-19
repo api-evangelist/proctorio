@@ -1,0 +1,71 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Proctorio API (v2) Launch API",
+    "version": "2.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Authorization",
+      "value": "{{Authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Launch",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Generate a candidate (test taker) launch URL",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{region}{endpoint}.com/v2/candidate/launch",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Returns a signed URL that opens the proctored exam session for the test taker, applying the supplied exam settings (recording, verification, and lockdown behaviors)."
+        },
+        {
+          "info": {
+            "name": "Generate a reviewer (Review Center) launch URL",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{region}{endpoint}.com/v2/reviewer/launch",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Returns a signed URL that opens the Review Center for a reviewer to inspect recordings, suspicion scores, and behavioral flags for an exam or attempt."
+        },
+        {
+          "info": {
+            "name": "Generate a live-proctoring launch URL",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{region}{endpoint}.com/v2/live/launch",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Returns a signed URL that opens a live/remote-proctor session, letting a human proctor monitor the candidate in real time."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
