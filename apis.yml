@@ -46,6 +46,11 @@ apis:
 - aid: proctorio:proctorio-webhooks
   name: Proctorio Result Webhooks (v2/v3)
   tags:
+  - Webhook
+  - Flags
+  - Suspicion Score
+  - Reviews
+  tags_raw:
   - Webhooks
   - Flags
   - Suspicion Score
