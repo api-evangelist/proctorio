@@ -16,6 +16,20 @@ description: Proctorio is a remote proctoring and learning-integrity platform th
   provisioned by a Proctorio representative per institution or partner - but the
   endpoint paths, request bodies, and webhook payloads are documented publicly in
   Proctorio's official Apache-2.0 .NET client (github.com/proctorio/API).
+deliveryModel:
+  model: open-core
+  license: Apache-2.0
+  open_source: true
+  commercial: true
+  callable_host: false
+  label: Open core · an OSS project plus a commercial hosted product
+  confidence: high
+  source:
+  - license
+  - openapi
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 accessModel:
   pricing: paid
   onboarding: self-serve
@@ -91,6 +105,8 @@ apis:
   - type: OpenCollection
     url: collections/proctorio.opencollection.json
 common:
+- type: IssueTracker
+  url: https://github.com/proctorio/API/issues
 - type: License
   name: Apache-2.0
   url: https://github.com/proctorio/API/blob/main/LICENSE
