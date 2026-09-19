@@ -93,6 +93,8 @@ apis:
   humanURL: https://proctorio.com/about/integration
   baseURL: https://{region}{endpoint}.com
   tags:
+  - Launches
+  tags_raw:
   - Launch
   properties:
   - type: OpenAPI
