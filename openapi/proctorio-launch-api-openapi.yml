@@ -1,7 +1,7 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
   title: Proctorio API (v2) Launch API
-  description: The Proctorio v2 integration API generates signed exam launch URLs for third-party assessment platforms that embed Proctorio outside of a native LMS/LTI flow. Given the exam's launch, start, take, and end URLs plus an exam-settings object describing which recording, verification, and lockdown behaviors to enforce, each endpoint returns a single signed URL that opens the proctored session for a candidate (test taker), a reviewer (Review Center), or a live proctor. Requests are authenticated with a Proctorio-provisioned consumer key and secret using OAuth-style HMAC signing; the region-specific base host is also provisioned per partner or institution. Access is gated - credentials and the endpoint host are issued by a Proctorio representative - but the endpoint paths, request bodies, and webhook payloads are documented publicly in Proctorio's official Apache-2.0 .NET client (github.com/proctorio/API). Endpoints and fields in this document are transcribed from that client and reference documentation; they are not fabricated, but the base host is a placeholder and response schemas are modeled from the documented behavior (each endpoint returns a signed launch URL string).
+  description: The Proctorio v2 integration API generates signed exam launch URLs for third-party assessment platforms that embed Proctorio outside of a native LMS/LTI flow.
   version: '2.0'
   contact:
     name: Proctorio
@@ -93,6 +93,10 @@ paths:
           $ref: '#/components/responses/Unauthorized'
 components:
   schemas:
+    LiveLaunchRequest:
+      allOf:
+      - $ref: '#/components/schemas/LaunchRequest'
+      description: Launch request for a live/remote proctor.
     LaunchUrlResponse:
       type: object
       description: Modeled response. The official .NET client returns the signed launch URL as a string; this wraps it for a JSON contract.
@@ -100,50 +104,14 @@ components:
         launch_url:
           type: string
           description: The signed URL that opens the proctored session.
+    CandidateLaunchRequest:
+      allOf:
+      - $ref: '#/components/schemas/LaunchRequest'
+      description: Launch request for a test taker (candidate).
     ReviewerLaunchRequest:
       allOf:
       - $ref: '#/components/schemas/LaunchRequest'
       description: Launch request for a Review Center reviewer.
-    LaunchRequest:
-      type: object
-      description: Common fields shared by all launch requests.
-      required:
-      - user_id
-      - launch_url
-      - exam_start
-      - exam_take
-      - exam_end
-      properties:
-        user_id:
-          type: string
-          description: Identifier of the user (test taker, reviewer, or proctor).
-        launch_url:
-          type: string
-          maxLength: 600
-          description: URL Proctorio uses to launch into the session.
-        exam_start:
-          type: string
-          maxLength: 600
-          description: URL (or regex) marking the start of the exam flow.
-        exam_take:
-          type: string
-          maxLength: 1000
-          description: URL (or regex) for the exam-taking page.
-        exam_end:
-          type: string
-          maxLength: 600
-          description: URL (or regex) marking exam completion.
-        exam_settings:
-          $ref: '#/components/schemas/ExamSettings'
-        expire:
-          type: integer
-          default: 18000
-          description: Seconds until the signed launch URL expires.
-        redirect_url:
-          type: string
-          maxLength: 600
-          nullable: true
-          description: Optional URL to redirect to after the session.
     ExamSettings:
       type: object
       description: The Proctorio behaviors to enforce during the session. Boolean toggles and enumerated modes control recording, verification, and lockdown.
@@ -211,14 +179,47 @@ components:
           default: false
         whiteboard:
           type: boolean
-    LiveLaunchRequest:
-      allOf:
-      - $ref: '#/components/schemas/LaunchRequest'
-      description: Launch request for a live/remote proctor.
-    CandidateLaunchRequest:
-      allOf:
-      - $ref: '#/components/schemas/LaunchRequest'
-      description: Launch request for a test taker (candidate).
+    LaunchRequest:
+      type: object
+      description: Common fields shared by all launch requests.
+      required:
+      - user_id
+      - launch_url
+      - exam_start
+      - exam_take
+      - exam_end
+      properties:
+        user_id:
+          type: string
+          description: Identifier of the user (test taker, reviewer, or proctor).
+        launch_url:
+          type: string
+          maxLength: 600
+          description: URL Proctorio uses to launch into the session.
+        exam_start:
+          type: string
+          maxLength: 600
+          description: URL (or regex) marking the start of the exam flow.
+        exam_take:
+          type: string
+          maxLength: 1000
+          description: URL (or regex) for the exam-taking page.
+        exam_end:
+          type: string
+          maxLength: 600
+          description: URL (or regex) marking exam completion.
+        exam_settings:
+          $ref: '#/components/schemas/ExamSettings'
+        expire:
+          type: integer
+          default: 18000
+          description: Seconds until the signed launch URL expires.
+        redirect_url:
+          type:
+          - string
+          - 'null'
+          maxLength: 600
+          description: Optional URL to redirect to after the session.
   responses:
     Unauthorized:
       description: Missing or invalid HMAC signature / credentials.
