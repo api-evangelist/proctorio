@@ -92,11 +92,58 @@ paths:
         '401':
           $ref: '#/components/responses/Unauthorized'
 components:
+  responses:
+    Unauthorized:
+      description: Missing or invalid HMAC signature / credentials.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
   schemas:
-    LiveLaunchRequest:
-      allOf:
-      - $ref: '#/components/schemas/LaunchRequest'
-      description: Launch request for a live/remote proctor.
+    LaunchRequest:
+      type: object
+      description: Common fields shared by all launch requests.
+      required:
+      - user_id
+      - launch_url
+      - exam_start
+      - exam_take
+      - exam_end
+      properties:
+        user_id:
+          type: string
+          description: Identifier of the user (test taker, reviewer, or proctor).
+        launch_url:
+          type: string
+          maxLength: 600
+          description: URL Proctorio uses to launch into the session.
+        exam_start:
+          type: string
+          maxLength: 600
+          description: URL (or regex) marking the start of the exam flow.
+        exam_take:
+          type: string
+          maxLength: 1000
+          description: URL (or regex) for the exam-taking page.
+        exam_end:
+          type: string
+          maxLength: 600
+          description: URL (or regex) marking exam completion.
+        exam_settings:
+          $ref: '#/components/schemas/ExamSettings'
+        expire:
+          type: integer
+          default: 18000
+          description: Seconds until the signed launch URL expires.
+        redirect_url:
+          type:
+          - string
+          - 'null'
+          maxLength: 600
+          description: Optional URL to redirect to after the session.
     LaunchUrlResponse:
       type: object
       description: Modeled response. The official .NET client returns the signed launch URL as a string; this wraps it for a JSON contract.
@@ -108,6 +155,10 @@ components:
       allOf:
       - $ref: '#/components/schemas/LaunchRequest'
       description: Launch request for a test taker (candidate).
+    LiveLaunchRequest:
+      allOf:
+      - $ref: '#/components/schemas/LaunchRequest'
+      description: Launch request for a live/remote proctor.
     ReviewerLaunchRequest:
       allOf:
       - $ref: '#/components/schemas/LaunchRequest'
@@ -179,57 +230,6 @@ components:
           default: false
         whiteboard:
           type: boolean
-    LaunchRequest:
-      type: object
-      description: Common fields shared by all launch requests.
-      required:
-      - user_id
-      - launch_url
-      - exam_start
-      - exam_take
-      - exam_end
-      properties:
-        user_id:
-          type: string
-          description: Identifier of the user (test taker, reviewer, or proctor).
-        launch_url:
-          type: string
-          maxLength: 600
-          description: URL Proctorio uses to launch into the session.
-        exam_start:
-          type: string
-          maxLength: 600
-          description: URL (or regex) marking the start of the exam flow.
-        exam_take:
-          type: string
-          maxLength: 1000
-          description: URL (or regex) for the exam-taking page.
-        exam_end:
-          type: string
-          maxLength: 600
-          description: URL (or regex) marking exam completion.
-        exam_settings:
-          $ref: '#/components/schemas/ExamSettings'
-        expire:
-          type: integer
-          default: 18000
-          description: Seconds until the signed launch URL expires.
-        redirect_url:
-          type:
-          - string
-          - 'null'
-          maxLength: 600
-          description: Optional URL to redirect to after the session.
-  responses:
-    Unauthorized:
-      description: Missing or invalid HMAC signature / credentials.
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              error:
-                type: string
   securitySchemes:
     proctorioHmac:
       type: apiKey
