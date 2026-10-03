@@ -103,6 +103,10 @@ components:
               error:
                 type: string
   schemas:
+    LiveLaunchRequest:
+      allOf:
+      - $ref: '#/components/schemas/LaunchRequest'
+      description: Launch request for a live/remote proctor.
     LaunchRequest:
       type: object
       description: Common fields shared by all launch requests.
@@ -144,21 +148,10 @@ components:
           - 'null'
           maxLength: 600
           description: Optional URL to redirect to after the session.
-    LaunchUrlResponse:
-      type: object
-      description: Modeled response. The official .NET client returns the signed launch URL as a string; this wraps it for a JSON contract.
-      properties:
-        launch_url:
-          type: string
-          description: The signed URL that opens the proctored session.
     CandidateLaunchRequest:
       allOf:
       - $ref: '#/components/schemas/LaunchRequest'
       description: Launch request for a test taker (candidate).
-    LiveLaunchRequest:
-      allOf:
-      - $ref: '#/components/schemas/LaunchRequest'
-      description: Launch request for a live/remote proctor.
     ReviewerLaunchRequest:
       allOf:
       - $ref: '#/components/schemas/LaunchRequest'
@@ -178,9 +171,9 @@ components:
         record_desk:
           type: string
           enum:
-          - false
-          - true
-          default: false
+          - 'off'
+          - 'on'
+          default: 'off'
         verify_video:
           type: boolean
         verify_audio:
@@ -198,9 +191,9 @@ components:
         full_screen:
           type: string
           enum:
-          - false
-          - true
-          default: false
+          - 'off'
+          - 'on'
+          default: 'off'
         disable_clipboard:
           type: boolean
         tabs:
@@ -224,12 +217,19 @@ components:
         calculator:
           type: string
           enum:
-          - false
+          - 'off'
           - basic
           - scientific
-          default: false
+          default: 'off'
         whiteboard:
           type: boolean
+    LaunchUrlResponse:
+      type: object
+      description: Modeled response. The official .NET client returns the signed launch URL as a string; this wraps it for a JSON contract.
+      properties:
+        launch_url:
+          type: string
+          description: The signed URL that opens the proctored session.
   securitySchemes:
     proctorioHmac:
       type: apiKey
