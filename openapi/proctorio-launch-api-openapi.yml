@@ -92,21 +92,7 @@ paths:
         '401':
           $ref: '#/components/responses/Unauthorized'
 components:
-  responses:
-    Unauthorized:
-      description: Missing or invalid HMAC signature / credentials.
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              error:
-                type: string
   schemas:
-    LiveLaunchRequest:
-      allOf:
-      - $ref: '#/components/schemas/LaunchRequest'
-      description: Launch request for a live/remote proctor.
     LaunchRequest:
       type: object
       description: Common fields shared by all launch requests.
@@ -148,14 +134,6 @@ components:
           - 'null'
           maxLength: 600
           description: Optional URL to redirect to after the session.
-    CandidateLaunchRequest:
-      allOf:
-      - $ref: '#/components/schemas/LaunchRequest'
-      description: Launch request for a test taker (candidate).
-    ReviewerLaunchRequest:
-      allOf:
-      - $ref: '#/components/schemas/LaunchRequest'
-      description: Launch request for a Review Center reviewer.
     ExamSettings:
       type: object
       description: The Proctorio behaviors to enforce during the session. Boolean toggles and enumerated modes control recording, verification, and lockdown.
@@ -223,6 +201,10 @@ components:
           default: 'off'
         whiteboard:
           type: boolean
+    ReviewerLaunchRequest:
+      allOf:
+      - $ref: '#/components/schemas/LaunchRequest'
+      description: Launch request for a Review Center reviewer.
     LaunchUrlResponse:
       type: object
       description: Modeled response. The official .NET client returns the signed launch URL as a string; this wraps it for a JSON contract.
@@ -230,6 +212,24 @@ components:
         launch_url:
           type: string
           description: The signed URL that opens the proctored session.
+    LiveLaunchRequest:
+      allOf:
+      - $ref: '#/components/schemas/LaunchRequest'
+      description: Launch request for a live/remote proctor.
+    CandidateLaunchRequest:
+      allOf:
+      - $ref: '#/components/schemas/LaunchRequest'
+      description: Launch request for a test taker (candidate).
+  responses:
+    Unauthorized:
+      description: Missing or invalid HMAC signature / credentials.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
   securitySchemes:
     proctorioHmac:
       type: apiKey
