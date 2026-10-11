@@ -1,0 +1,11 @@
+[
+  {
+    "repo": "proctorio",
+    "captured_at": "2026-10-11T192824",
+    "source_url": "https://proctorio.com",
+    "source_type": "Website",
+    "file": "proctorio-2026-10-11T192824.png",
+    "bytes": 277684,
+    "capture": "playwright-local"
+  }
+]
