@@ -134,6 +134,10 @@ components:
           - 'null'
           maxLength: 600
           description: Optional URL to redirect to after the session.
+    ReviewerLaunchRequest:
+      allOf:
+      - $ref: '#/components/schemas/LaunchRequest'
+      description: Launch request for a Review Center reviewer.
     ExamSettings:
       type: object
       description: The Proctorio behaviors to enforce during the session. Boolean toggles and enumerated modes control recording, verification, and lockdown.
@@ -201,17 +205,6 @@ components:
           default: 'off'
         whiteboard:
           type: boolean
-    ReviewerLaunchRequest:
-      allOf:
-      - $ref: '#/components/schemas/LaunchRequest'
-      description: Launch request for a Review Center reviewer.
-    LaunchUrlResponse:
-      type: object
-      description: Modeled response. The official .NET client returns the signed launch URL as a string; this wraps it for a JSON contract.
-      properties:
-        launch_url:
-          type: string
-          description: The signed URL that opens the proctored session.
     LiveLaunchRequest:
       allOf:
       - $ref: '#/components/schemas/LaunchRequest'
@@ -220,6 +213,13 @@ components:
       allOf:
       - $ref: '#/components/schemas/LaunchRequest'
       description: Launch request for a test taker (candidate).
+    LaunchUrlResponse:
+      type: object
+      description: Modeled response. The official .NET client returns the signed launch URL as a string; this wraps it for a JSON contract.
+      properties:
+        launch_url:
+          type: string
+          description: The signed URL that opens the proctored session.
   responses:
     Unauthorized:
       description: Missing or invalid HMAC signature / credentials.
